@@ -12,26 +12,40 @@ public class DoctorController {
     DoctorView doctorView = new DoctorView();
     Validation validation = new Validation();
 
+    
     // Thêm bác sĩ
     public void addDoctor() {
-        Doctor tempDoctor = new Doctor();
-//        Doctor doctor = tempDoctor.inputDoctorDetails(); // Gọi trực tiếp từ Doctor
-        Doctor doctor = new Doctor();
-        doctor.inputDoctorDetails();
+        String code;
 
-        if (doctorDatabase.containsKey(doctor.getCode())) {
-            doctorView.displayMessage("❌ Doctor code already exists!");
-        } else {
-            doctorDatabase.put(doctor.getCode(), doctor);
-            doctorView.displayMessage("✅ Doctor added successfully!");
+        // Kiểm tra mã bác sĩ ngay khi nhập
+        while (true) {
+            code = validation.checkEmpty("Enter doctor code: ").trim();
+
+            if (doctorDatabase.containsKey(code)) {
+                doctorView.displayMessage("❌ Doctor code already exists!");
+                System.out.println("Please enter another doctor code.");
+            } else {
+                break;
+            }
         }
+
+        // Chỉ nhập thông tin khác khi mã bác sĩ hợp lệ
+        String name = validation.checkEmpty("Enter doctor name: ");
+        String specialization = validation.checkEmpty("Enter specialization: ");
+        int availability = validation.checkPositiveNumber("Enter availability (hours/week): ");
+
+        Doctor doctor = new Doctor(code, name, specialization, availability);
+        doctorDatabase.put(code, doctor);
+
+        doctorView.displayMessage("✅ Doctor added successfully!");
     }
+
 
     // Cập nhật thông tin bác sĩ
     public void updateDoctor() {
         String code = validation.checkEmpty("Enter doctor code to update: ");
         Doctor existing = doctorDatabase.get(code);
-
+        //null neu kh thay doi doctor
         if (existing != null) {
             System.out.println("Enter new details for doctor (leave blank to keep old value):");
 
@@ -94,31 +108,6 @@ public class DoctorController {
         System.out.println("3. Delete Doctor");
         System.out.println("4. Search Doctor");
         System.out.println("5. Exit");
-    }
-
-    // Chạy chương trình
-    public void start() {
-        while (true) {
-            showMenu();
-            int choice = validation.checkIntLimit("Enter choice: ", 1, 5);
-
-            switch (choice) {
-                case 1 ->
-                    addDoctor();
-                case 2 ->
-                    updateDoctor();
-                case 3 ->
-                    deleteDoctor();
-                case 4 ->
-                    searchDoctor();
-                case 5 -> {
-                    System.out.println("👋 Exiting program...");
-                    return;
-                }
-                default ->
-                    System.out.println("❌ Invalid choice! Please try again.");
-            }
-        }
     }
     class DoctorView {
 

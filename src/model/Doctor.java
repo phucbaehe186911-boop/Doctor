@@ -80,7 +80,7 @@ public class Doctor {
     
     
 
-   
+    ;
     public void inputDoctorDetails() {
           Validation validation = new Validation(); // tạo mới đối tượng Validation để nhập dữ liệu
 
