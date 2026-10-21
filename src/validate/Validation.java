@@ -11,10 +11,13 @@ public class Validation {
     // biến cục bộ
     public Scanner scanner = new Scanner(System.in);
     //nhập chuỗi bắt buộc
+    
+    //nhập chuỗi bắt buộc
     public String checkEmpty(String mess) {
-        System.out.println(mess);
         while (true) {
-            String input = scanner.nextLine();
+            System.out.print(mess);
+            String input = scanner.nextLine().trim();
+
             if (input.isEmpty()) {
                 System.out.println("Not empty!");
             } else {
@@ -22,6 +25,7 @@ public class Validation {
             }
         }
     }
+
 
 //    public String stringInput(String mess) {
 //        System.out.println(mess);
@@ -101,6 +105,42 @@ public class Validation {
             }
         }
     }
+    
+    
+    //nhập chuỗi chỉ chứa chữ cái
+    public String checkLetters(String mess) {
+        while (true) {
+            System.out.print(mess);
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                System.out.println("Not empty!");
+            } else if (!input.matches("[\\p{L}]+(\\s+[\\p{L}]+)*")) {
+                System.out.println("Must contain letters only!");
+            } else {
+                return input;
+            }
+        }
+    }
+    
+    
+    // Cho phép bỏ trống hoặc nhập chuỗi chỉ chứa chữ cái
+    public String optionalLetters(String mess) {
+        while (true) {
+            System.out.print(mess);
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                return input;
+            } else if (!input.matches("[\\p{L}]+(\\s+[\\p{L}]+)*")) {
+                System.out.println("Must contain letters only!");
+            } else {
+                return input;
+            }
+        }
+    }
+
+
 
 
 //    public String getCurrentDay() {

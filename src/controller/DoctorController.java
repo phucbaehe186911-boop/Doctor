@@ -30,8 +30,10 @@ public class DoctorController {
         }
 
         // Chỉ nhập thông tin khác khi mã bác sĩ hợp lệ
-        String name = validation.checkEmpty("Enter doctor name: ");
-        String specialization = validation.checkEmpty("Enter specialization: ");
+        
+        String name = validation.checkLetters("Enter doctor name: ");
+        String specialization = validation.checkLetters("Enter specialization: ");
+
         int availability = validation.checkPositiveNumber("Enter availability (hours/week): ");
 
         Doctor doctor = new Doctor(code, name, specialization, availability);
@@ -50,8 +52,10 @@ public class DoctorController {
             System.out.println("Enter new details for doctor (leave blank to keep old value):");
 
             // Cho phép nhập lại từng trường, giữ nguyên nếu để trống
-            String newName = validation.optionalInput("Enter new name (" + existing.getName() + "): ");
-            String newSpecialization = validation.optionalInput("Enter new specialization (" + existing.getSpecialization() + "): ");
+            
+            String newName = validation.optionalLetters("Enter new name (" + existing.getName() + "): ");
+            String newSpecialization = validation.optionalLetters("Enter new specialization (" + existing.getSpecialization() + "): ");
+
             int newAvailability = validation.checkPositiveNumberAllowEmpty("Enter new availability (" + existing.getAvailability() + "): ", existing.getAvailability());
 
             // Cập nhật
